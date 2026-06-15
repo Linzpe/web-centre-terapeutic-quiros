@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centre Terapèutic Quirós · L'Hospitalet de Llobregat</title>
+    <meta name="description" content="Centre Terapèutic Quirós — Presoterapia, remodelación facial y corporal, depilación láser, ondas de choque. En L'Hospitalet de Llobregat. Tel. 932 98 93 90.">
+    <meta property="og:title" content="Centre Terapèutic Quirós">
+    <meta property="og:description" content="Tu bienestar, nuestra especialidad. Tratamientos estéticos y terapéuticos en L'Hospitalet.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* ═══════════════════════════════════════
+           CENTRE TERAPÈUTIC QUIRÓS
+           Palette: Rosa · Blanco · Pizarra suave
+        ═══════════════════════════════════════ */
+        :root {
+            --brand:      #C95E7B;
+            --brand-dark: #A84A63;
+            --brand-light:#FAE8EE;
+            --brand-xlt:  #FDF4F7;
+            --blush:      #F0C8D4;
+            --ink:        #2C1F26;
+            --bg:         #FDFAFA;
+            --surface:    #FFFFFF;
+            --muted:      #7A6270;
+            --line:       #EDD5DE;
+            --font-head:  'Cormorant Garamond', serif;
+            --font-body:  'DM Sans', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--ink);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        #nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 2.5rem;
+            transition: background .4s, box-shadow .4s;
+        }
+        #nav.scrolled {
+            background: rgba(253,250,250,.97);
+            box-shadow: 0 1px 0 var(--line);
+            backdrop-filter: blur(12px);
+        }
+        .nav-logo {
+            font-family: var(--font-head);
+            font-size: 1.2rem; font-weight: 600; letter-spacing: .06em;
+            color: #fff; text-decoration: none;
+            transition: color .4s;
+            line-height: 1.2;
+        }
+        #nav.scrolled .nav-logo { color: var(--ink); }
+        .nav-logo span { color: var(--blush); display: block; font-size: .75rem; font-weight: 300; letter-spacing: .18em; text-transform: uppercase; }
+        #nav.scrolled .nav-logo span { color: var(--brand); }
+
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a {
+            font-size: .75rem; font-weight: 500; letter-spacing: .09em;
+            text-transform: uppercase; color: rgba(255,255,255,.75);
+            text-decoration: none; transition: color .2s;
+        }
+        #nav.scrolled .nav-links a { color: var(--muted); }
+        .nav-links a:hover { color: var(--brand) !important; }
+
+        .nav-tel {
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .55rem 1.2rem;
+            background: var(--brand); color: #fff !important;
+            font-size: .72rem !important; font-weight: 600 !important;
+            letter-spacing: .08em !important; text-transform: uppercase !important;
+            text-decoration: none; border-radius: 2px;
+            transition: background .2s;
+        }
+        .nav-tel:hover { background: var(--brand-dark) !important; }
+
+        /* ── BURGER ── */
+        #burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        #burger span { display: block; width: 24px; height: 2px; background: #fff; transition: background .4s, transform .3s, opacity .3s; }
+        #nav.scrolled #burger span { background: var(--ink); }
+        #burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        #burger.open span:nth-child(2) { opacity: 0; }
+        #burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ── MOBILE MENU ── */
+        #mobile-menu {
+            position: fixed; inset: 0; z-index: 99;
+            background: var(--ink);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2.5rem;
+            opacity: 0; pointer-events: none; transition: opacity .35s;
+        }
+        #mobile-menu.open { opacity: 1; pointer-events: all; }
+        #mobile-menu a {
+            font-family: var(--font-head); font-size: 2.2rem; font-weight: 400;
+            color: #fff; text-decoration: none; transition: color .2s;
+        }
+        #mobile-menu a:hover { color: var(--brand); }
+        .mobile-tel {
+            display: inline-flex; align-items: center; gap: .6rem;
+            padding: .9rem 2rem; background: var(--brand);
+            color: #fff !important; font-family: var(--font-body) !important;
+            font-size: .85rem !important; font-weight: 600 !important;
+            letter-spacing: .1em; text-transform: uppercase;
+            text-decoration: none; border-radius: 2px; margin-top: 1rem;
+        }
+
+        /* ── HERO ── */
+        #hero {
+            position: relative; min-height: 100svh;
+            display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background-image: url('fachada1.png');
+            background-size: cover; background-position: center top;
+            transform: scale(1.06); transition: transform 8s ease;
+        }
+        .hero-bg.loaded { transform: scale(1); }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(44,31,38,.90) 0%,
+                rgba(44,31,38,.60) 35%,
+                rgba(44,31,38,.22) 70%,
+                rgba(44,31,38,.08) 100%
+            );
+        }
+        /* Subtle pink tint top-right */
+        .hero-overlay::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 80% 15%, rgba(201,94,123,.18) 0%, transparent 70%);
+        }
+        .hero-content {
+            position: relative; z-index: 5;
+            padding: 0 2.5rem 5.5rem;
+            max-width: 1200px; margin: 0 auto; width: 100%;
+        }
+        .hero-kicker {
+            display: inline-flex; align-items: center; gap: .8rem;
+            font-size: .68rem; font-weight: 600; letter-spacing: .28em;
+            text-transform: uppercase; color: var(--blush); margin-bottom: 1.2rem;
+        }
+        .hero-kicker::before { content: ''; display: block; width: 28px; height: 1px; background: var(--blush); }
+        #hero h1 {
+            font-family: var(--font-head);
+            font-size: clamp(3.2rem, 8vw, 7.5rem);
+            font-weight: 500; line-height: .95; color: #fff; letter-spacing: -.01em;
+        }
+        #hero h1 em { color: var(--blush); font-style: italic; font-weight: 300; }
+        .hero-tagline {
+            margin-top: 1.6rem; font-size: clamp(.92rem, 1.5vw, 1.1rem);
+            font-weight: 300; color: rgba(255,255,255,.65);
+            max-width: 420px; line-height: 1.75; letter-spacing: .02em;
+        }
+        .hero-actions { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: .6rem;
+            padding: .9rem 2rem; background: var(--brand); color: #fff;
+            font-family: var(--font-body); font-size: .75rem; font-weight: 600;
+            letter-spacing: .1em; text-transform: uppercase;
+            text-decoration: none; border-radius: 2px;
+            transition: background .25s, transform .25s;
+        }
+        .btn-primary:hover { background: var(--brand-dark); transform: translateY(-2px); }
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: .6rem;
+            padding: .9rem 2rem; border: 1px solid rgba(255,255,255,.3);
+            color: rgba(255,255,255,.8); font-family: var(--font-body);
+            font-size: .75rem; font-weight: 400; letter-spacing: .1em; text-transform: uppercase;
+            text-decoration: none; border-radius: 2px; transition: border-color .25s, color .25s;
+        }
+        .btn-ghost:hover { border-color: var(--blush); color: var(--blush); }
+
+        .scroll-hint {
+            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            z-index: 5; color: rgba(255,255,255,.4); animation: bounce-h 2.2s ease infinite;
+        }
+        @keyframes bounce-h {
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50%      { transform: translateX(-50%) translateY(7px); }
+        }
+
+        /* ── SECTIONS ── */
+        section { padding: 5.5rem 2.5rem; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .section-kicker {
+            font-size: .66rem; font-weight: 600; letter-spacing: .28em;
+            text-transform: uppercase; color: var(--brand);
+            display: flex; align-items: center; gap: .8rem; margin-bottom: .9rem;
+        }
+        .section-kicker::after { content: ''; display: block; width: 36px; height: 1px; background: var(--brand); opacity: .5; }
+        .section-title {
+            font-family: var(--font-head);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 500; line-height: 1.1; color: var(--ink);
+        }
+        .section-title em { color: var(--brand); font-style: italic; font-weight: 300; }
+
+        /* ── INTRO STRIP ── */
+        #intro {
+            background: var(--surface); border-top: 1px solid var(--line);
+            padding: 3rem 2.5rem;
+        }
+        .intro-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+        }
+        .intro-item {
+            background: var(--surface); padding: 1.8rem 1.5rem; text-align: center;
+        }
+        .intro-icon { font-size: 1.8rem; margin-bottom: .6rem; }
+        .intro-label {
+            font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+            text-transform: uppercase; color: var(--brand); margin-bottom: .3rem;
+        }
+        .intro-desc { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+
+        /* ── TRATAMIENTOS ── */
+        #tratamientos { background: var(--bg); }
+        .tratamientos-grid {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem;
+        }
+        .trat-card {
+            background: var(--surface); border: 1px solid var(--line);
+            overflow: hidden; position: relative;
+            transition: box-shadow .3s, transform .3s;
+        }
+        .trat-card:hover { box-shadow: 0 12px 40px rgba(201,94,123,.12); transform: translateY(-4px); }
+        .trat-card-img {
+            width: 100%; aspect-ratio: 4/3; overflow: hidden; position: relative;
+        }
+        .trat-card-img img {
+            width: 100%; height: 100%; object-fit: cover; object-position: center;
+            transition: transform .6s; filter: saturate(.9);
+        }
+        .trat-card:hover .trat-card-img img { transform: scale(1.05); }
+        /* 4-direction mask to clean up edges */
+        .trat-card-img::after {
+            content: ''; position: absolute; inset: 0;
+            background:
+                linear-gradient(to bottom, rgba(253,250,250,.6) 0%, transparent 20%),
+                linear-gradient(to top,    rgba(253,250,250,.9) 0%, transparent 30%),
+                linear-gradient(to right,  rgba(253,250,250,.5) 0%, transparent 20%),
+                linear-gradient(to left,   rgba(253,250,250,.5) 0%, transparent 20%);
+        }
+        .trat-badge {
+            position: absolute; top: 1rem; right: 1rem; z-index: 2;
+            background: var(--brand); color: #fff;
+            font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+            padding: .3rem .7rem; border-radius: 2px;
+        }
+        .trat-card-body { padding: 1.5rem; }
+        .trat-card-body h3 {
+            font-family: var(--font-head); font-size: 1.4rem; font-weight: 500;
+            color: var(--ink); margin-bottom: .6rem; line-height: 1.2;
+        }
+        .trat-card-body p { font-size: .88rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+        .trat-tech {
+            font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+            text-transform: uppercase; color: var(--brand); opacity: .7;
+        }
+        .trat-price {
+            margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--line);
+            display: flex; align-items: baseline; gap: .6rem;
+        }
+        .price-num {
+            font-family: var(--font-head); font-size: 2rem; font-weight: 600; color: var(--brand);
+        }
+        .price-label { font-size: .78rem; color: var(--muted); }
+        .price-old { font-size: .8rem; color: var(--muted); text-decoration: line-through; }
+
+        /* ── LASER SECTION ── */
+        #laser {
+            background: var(--brand-xlt);
+            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+        }
+        .laser-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem;
+        }
+        .laser-img { position: relative; }
+        .laser-img img { width: 100%; display: block; object-fit: cover; }
+        .laser-img::before {
+            content: ''; position: absolute;
+            top: -1rem; right: -1rem; bottom: 1rem; left: 1rem;
+            border: 2px solid var(--blush); opacity: .6; z-index: -1;
+        }
+        .laser-table { width: 100%; margin-top: 1.5rem; }
+        .laser-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: .85rem 1rem;
+            background: var(--surface); border-bottom: 1px solid var(--line);
+            font-size: .9rem;
+        }
+        .laser-row:first-child { border-radius: 2px 2px 0 0; }
+        .laser-row:last-child { border-bottom: none; border-radius: 0 0 2px 2px; }
+        .laser-zone { color: var(--ink); font-weight: 400; }
+        .laser-prices { display: flex; gap: 1.5rem; }
+        .laser-pvp { color: var(--muted); font-size: .8rem; text-decoration: line-through; }
+        .laser-promo { color: var(--brand); font-weight: 700; }
+        .laser-head {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: .6rem 1rem; background: var(--brand);
+            color: #fff; font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+        }
+        .laser-highlight {
+            background: var(--brand-light) !important; font-weight: 600;
+        }
+
+        /* ── GALERÍA ── */
+        #galeria { background: var(--surface); }
+        .galeria-grid {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 3rem;
+        }
+        .gal-item { overflow: hidden; position: relative; min-height: 260px; }
+        .gal-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block; transition: transform .5s;
+            filter: saturate(.85);
+        }
+        .gal-item:hover img { transform: scale(1.05); filter: saturate(1); }
+
+        /* ── HORARIOS ── */
+        #horarios {
+            background: var(--ink); color: #fff;
+        }
+        #horarios .section-kicker { color: var(--blush); }
+        #horarios .section-kicker::after { background: var(--blush); }
+        #horarios .section-title { color: #fff; }
+        #horarios .section-title em { color: var(--blush); }
+        .horarios-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem;
+        }
+        .horario-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: .9rem 0; border-bottom: 1px solid rgba(255,255,255,.08);
+            font-size: .95rem;
+        }
+        .horario-row:last-child { border-bottom: none; }
+        .horario-day { font-weight: 600; color: #fff; }
+        .horario-time { color: rgba(255,255,255,.55); }
+        .horario-time.open { color: var(--blush); font-weight: 600; }
+        .horario-time.closed { color: rgba(255,255,255,.25); font-style: italic; }
+        .horarios-cta {
+            padding: 2.5rem; background: var(--brand); border-radius: 2px;
+        }
+        .horarios-cta h3 {
+            font-family: var(--font-head); font-size: 2rem; font-weight: 500; color: #fff; margin-bottom: .7rem;
+        }
+        .horarios-cta p { font-size: .9rem; color: rgba(255,255,255,.75); margin-bottom: 1.8rem; line-height: 1.65; }
+        .cta-tel {
+            display: inline-flex; align-items: center; gap: .6rem;
+            background: #fff; color: var(--brand);
+            padding: .85rem 1.8rem; font-weight: 700; font-size: .88rem;
+            letter-spacing: .06em; text-decoration: none; border-radius: 2px;
+            transition: background .2s;
+        }
+        .cta-tel:hover { background: var(--brand-xlt); }
+
+        /* ── UBICACIÓN ── */
+        #ubicacion { background: var(--bg); }
+        .ubicacion-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-top: 3rem;
+        }
+        .info-item {
+            display: flex; gap: 1rem; align-items: flex-start;
+            padding: 1.2rem 0; border-bottom: 1px solid var(--line);
+        }
+        .info-item:last-child { border-bottom: none; }
+        .info-icon {
+            width: 40px; height: 40px; flex-shrink: 0;
+            background: var(--brand-light); border-radius: 2px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .info-icon svg { width: 18px; height: 18px; stroke: var(--brand); }
+        .info-text h4 { font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+        .info-text p, .info-text a { font-size: 1rem; color: var(--ink); text-decoration: none; line-height: 1.5; }
+        .info-text a:hover { color: var(--brand); }
+        .map-wrap { border: 1px solid var(--line); overflow: hidden; }
+        .map-wrap iframe { display: block; width: 100%; height: 380px; border: none; }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--ink); color: rgba(255,255,255,.45);
+            padding: 2.5rem; display: flex; flex-wrap: wrap;
+            gap: 1rem; justify-content: space-between; align-items: center;
+            font-size: .78rem; letter-spacing: .05em;
+        }
+        .foot-brand { font-family: var(--font-head); font-size: 1.1rem; font-weight: 600; color: #fff; }
+        .foot-brand span { color: var(--brand); }
+        footer a { color: rgba(255,255,255,.35); text-decoration: none; }
+        footer a:hover { color: var(--brand); }
+
+        /* ── REVEAL ── */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 960px) {
+            .tratamientos-grid { grid-template-columns: repeat(2,1fr); }
+            .laser-grid, .horarios-grid, .ubicacion-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .laser-img::before { display: none; }
+            .galeria-grid { grid-template-columns: repeat(2,1fr); }
+            .intro-inner { grid-template-columns: repeat(2,1fr); }
+        }
+        @media (max-width: 640px) {
+            section { padding: 3.5rem 1.25rem; }
+            #hero .hero-content { padding: 0 1.25rem 4rem; }
+            #nav { padding: 0 1.25rem; }
+            .nav-links { display: none; }
+            #burger { display: flex; }
+            .tratamientos-grid { grid-template-columns: 1fr; }
+            .galeria-grid { grid-template-columns: 1fr; }
+            .intro-inner { grid-template-columns: 1fr 1fr; }
+            footer { padding: 2rem 1.25rem; }
+        }
+        @media (min-width: 641px) { #mobile-menu { display: none !important; } }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+    <a href="#" class="nav-logo">
+        Centre Terapèutic Quirós
+        <span>Estètica · Benestar · Salut</span>
+    </a>
+    <div class="nav-links">
+        <a href="#tratamientos">Tratamientos</a>
+        <a href="#laser">Depilación Láser</a>
+        <a href="#horarios">Horarios</a>
+        <a href="#ubicacion" class="nav-tel">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.17 1 2 2 0 012.19 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+            Pedir cita
+        </a>
+    </div>
+    <button id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu">
+    <a href="#tratamientos" class="mm-link">Tratamientos</a>
+    <a href="#laser" class="mm-link">Depilación Láser</a>
+    <a href="#horarios" class="mm-link">Horarios</a>
+    <a href="#ubicacion" class="mm-link">Ubicación</a>
+    <a href="tel:+34932989390" class="mobile-tel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.17 1 2 2 0 012.19 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+        932 98 93 90
+    </a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-kicker">Centre Terapèutic · L'Hospitalet de Llobregat</div>
+        <h1>Tu <em>bienestar</em>,<br>nuestra pasión.</h1>
+        <p class="hero-tagline">Tratamientos estéticos y terapéuticos de última tecnología. Remodelación, depilación láser, presoterapia y ondas de choque.</p>
+        <div class="hero-actions">
+            <a href="tel:+34932989390" class="btn-primary">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.17 1 2 2 0 012.19 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+                Pedir cita · 932 98 93 90
+            </a>
+            <a href="#tratamientos" class="btn-ghost">Ver tratamientos</a>
+        </div>
+    </div>
+    <div class="scroll-hint">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+</section>
+
+<!-- INTRO STRIP -->
+<div id="intro">
+    <div class="intro-inner">
+        <div class="intro-item reveal">
+            <div class="intro-icon">✦</div>
+            <div class="intro-label">Tecnología</div>
+            <div class="intro-desc">Venus Freeze · Sapphire Laser · Storz Medical</div>
+        </div>
+        <div class="intro-item reveal">
+            <div class="intro-icon">◇</div>
+            <div class="intro-label">Sin cirugía</div>
+            <div class="intro-desc">Resultados visibles sin intervención invasiva</div>
+        </div>
+        <div class="intro-item reveal">
+            <div class="intro-icon">◎</div>
+            <div class="intro-label">Promociones</div>
+            <div class="intro-desc">Descuentos de hasta el 43% en bonos</div>
+        </div>
+        <div class="intro-item reveal">
+            <div class="intro-icon">◈</div>
+            <div class="intro-label">Atención</div>
+            <div class="intro-desc">Lunes a viernes · 10:00 a 21:30</div>
+        </div>
+    </div>
+</div>
+
+<!-- TRATAMIENTOS -->
+<section id="tratamientos">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-kicker">Lo que ofrecemos</div>
+            <h2 class="section-title">Nuestros <em>tratamientos</em></h2>
+        </div>
+        <div class="tratamientos-grid">
+
+            <!-- Remodelación Facial -->
+            <div class="trat-card reveal">
+                <div class="trat-card-img">
+                    <img src="foto1.png" alt="Remodelación facial sin cirugía" loading="lazy">
+                    <div class="trat-badge">−30% dto</div>
+                </div>
+                <div class="trat-card-body">
+                    <h3>Remodelación Facial sin Cirugía</h3>
+                    <p>Lifting facial y rejuvenecimiento con tratamiento magneto-térmico. Resultados visibles sin intervención quirúrgica.</p>
+                    <div class="trat-tech">Venus Freeze · Tecnología MP²</div>
+                    <div class="trat-price">
+                        <div class="price-num" style="font-size:1.2rem">Descuento −30%</div>
+                        <div class="price-label">solo al comprar varias sesiones</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remodelación Corporal -->
+            <div class="trat-card reveal">
+                <div class="trat-card-img">
+                    <img src="foto2.png" alt="Remodelación corporal" loading="lazy">
+                    <div class="trat-badge">−30% dto</div>
+                </div>
+                <div class="trat-card-body">
+                    <h3>Remodelación Corporal sin Cirugía</h3>
+                    <p>Tratamiento de celulitis y flacidez. Reafirma la piel y mejora la calidad y elasticidad con radiofrecuencia multipolar.</p>
+                    <div class="trat-tech">Venus Freeze · MP² Multipolar</div>
+                    <div class="trat-price">
+                        <div class="price-num" style="font-size:1.2rem">Descuento −30%</div>
+                        <div class="price-label">solo al comprar varias sesiones</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Presoterapia -->
+            <div class="trat-card reveal">
+                <div class="trat-card-img">
+                    <img src="foto3.png" alt="Presoterapia" loading="lazy">
+                    <div class="trat-badge">−43% dto</div>
+                </div>
+                <div class="trat-card-body">
+                    <h3>Presoterapia</h3>
+                    <p>Ideal para retención de líquidos, mejora de la circulación, reducción de celulitis y pérdida de volumen. Estimula el sistema inmunológico.</p>
+                    <div class="trat-price">
+                        <div>
+                            <div class="price-old">PVP normal</div>
+                            <div style="display:flex;align-items:baseline;gap:.5rem">
+                                <span class="price-num">80€</span>
+                                <span class="price-label">bono 10 sesiones</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ondas de Choque -->
+            <div class="trat-card reveal">
+                <div class="trat-card-img">
+                    <img src="foto4.png" alt="Ondas de choque" loading="lazy">
+                    <div class="trat-badge">−18% dto</div>
+                </div>
+                <div class="trat-card-body">
+                    <h3>Ondas de Choque</h3>
+                    <p>Libres de dolor, eso es lo que importa. Efectivo en tendinitis, fascitis plantar, espolón calcáneo, calcificaciones y tendinopatía trocantérea.</p>
+                    <div class="trat-tech">Storz Medical · Tecnología ESWT</div>
+                    <div class="trat-price">
+                        <div>
+                            <div class="price-old">PVP 56€</div>
+                            <div style="display:flex;align-items:baseline;gap:.5rem">
+                                <span class="price-num">49€</span>
+                                <span class="price-label">/ sesión · P. Promoción</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="text-align:center;margin-top:3rem" class="reveal">
+            <a href="tel:+34932989390" class="btn-primary">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.17 1 2 2 0 012.19 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+                Consultar tarifas · 932 98 93 90
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- DEPILACIÓN LÁSER -->
+<section id="laser">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-kicker">Depilación definitiva</div>
+            <h2 class="section-title">Láser Diodo <em>Sapphire</em></h2>
+            <p style="margin-top:.8rem;color:var(--muted);font-size:.95rem;max-width:500px;line-height:1.7">El láser diodo más eficaz de la ciudad. Eficaz y seguro, para todo tipo de piel.</p>
+        </div>
+        <div class="laser-grid">
+            <div style="reveal">
+                <div class="laser-head">
+                    <span>Zona</span>
+                    <div class="laser-prices">
+                        <span>PVP</span>
+                        <span>Promoción</span>
+                    </div>
+                </div>
+                <div class="laser-row"><span class="laser-zone">Piernas enteras</span><div class="laser-prices"><span class="laser-pvp">99€</span><span class="laser-promo">67€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Medias piernas</span><div class="laser-prices"><span class="laser-pvp">49€</span><span class="laser-promo">39€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Ingles normales</span><div class="laser-prices"><span class="laser-pvp">40€</span><span class="laser-promo">18€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Ingles brasileñas</span><div class="laser-prices"><span class="laser-pvp">55€</span><span class="laser-promo">35€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Pubis completo</span><div class="laser-prices"><span class="laser-pvp">40€</span><span class="laser-promo">25€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Axilas</span><div class="laser-prices"><span class="laser-pvp">30€</span><span class="laser-promo">18€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Glúteos</span><div class="laser-prices"><span class="laser-pvp">30€</span><span class="laser-promo">20€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Zona perineal</span><div class="laser-prices"><span class="laser-pvp">30€</span><span class="laser-promo">20€</span></div></div>
+                <div class="laser-row laser-highlight">
+                    <span class="laser-zone">Ingles bras. + axilas</span>
+                    <div class="laser-prices"><span class="laser-pvp">—</span><span class="laser-promo">79€</span></div>
+                </div>
+                <div class="laser-row laser-highlight">
+                    <span class="laser-zone">Piernas + ingles + axilas</span>
+                    <div class="laser-prices"><span class="laser-pvp">—</span><span class="laser-promo">169€</span></div>
+                </div>
+                <div class="laser-row"><span class="laser-zone">Mentón</span><div class="laser-prices"><span class="laser-pvp">25€</span><span class="laser-promo">20€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Patillas</span><div class="laser-prices"><span class="laser-pvp">25€</span><span class="laser-promo">20€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Nuca/Cuello</span><div class="laser-prices"><span class="laser-pvp">25€</span><span class="laser-promo">20€</span></div></div>
+                <div class="laser-row"><span class="laser-zone">Brazos completos</span><div class="laser-prices"><span class="laser-pvp">59€</span><span class="laser-promo">45€</span></div></div>
+            </div>
+            <div class="reveal" style="text-align:center;padding:2rem">
+                <div style="font-family:var(--font-head);font-size:3rem;font-weight:300;color:var(--brand);line-height:1">Sapphire</div>
+                <div style="font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem">Laser Diode Technology</div>
+                <div style="background:var(--brand);color:#fff;padding:2rem;border-radius:2px;margin-bottom:1.5rem">
+                    <div style="font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;opacity:.7;margin-bottom:.5rem">Oferta especial</div>
+                    <div style="font-family:var(--font-head);font-size:2.8rem;font-weight:600;line-height:1">169€</div>
+                    <div style="font-size:.85rem;opacity:.85;margin-top:.4rem">Piernas + ingles brasileñas + axilas</div>
+                </div>
+                <a href="tel:+34932989390" class="btn-primary" style="width:100%;justify-content:center">
+                    Reservar sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HORARIOS -->
+<section id="horarios">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-kicker">Cuándo visitarnos</div>
+            <h2 class="section-title">Horario <em>de apertura</em></h2>
+        </div>
+        <div class="horarios-grid">
+            <div class="reveal">
+                <div class="horario-row"><span class="horario-day">Lunes</span><span class="horario-time open">10:00 – 21:30</span></div>
+                <div class="horario-row"><span class="horario-day">Martes</span><span class="horario-time open">10:00 – 21:30</span></div>
+                <div class="horario-row"><span class="horario-day">Miércoles</span><span class="horario-time open">10:00 – 21:30</span></div>
+                <div class="horario-row"><span class="horario-day">Jueves</span><span class="horario-time open">10:00 – 21:30</span></div>
+                <div class="horario-row"><span class="horario-day">Viernes</span><span class="horario-time open">10:00 – 21:30</span></div>
+                <div class="horario-row"><span class="horario-day">Sábado</span><span class="horario-time closed">Cerrado</span></div>
+                <div class="horario-row"><span class="horario-day">Domingo</span><span class="horario-time closed">Cerrado</span></div>
+            </div>
+            <div class="horarios-cta reveal">
+                <h3>¿Quieres pedir cita?</h3>
+                <p>Llámanos y te asesoramos sin compromiso. Nuestro equipo te recomendará el tratamiento más adecuado para ti.</p>
+                <a href="tel:+34932989390" class="cta-tel">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.17 1 2 2 0 012.19 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+                    932 98 93 90
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section id="ubicacion">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-kicker">Dónde estamos</div>
+            <h2 class="section-title">Encuéntranos <em>aquí</em></h2>
+        </div>
+        <div class="ubicacion-grid">
+            <div class="reveal">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="info-text">
+                        <h4>Dirección</h4>
+                        <p>Carrer de Jacint Verdaguer, 14<br>08902 L'Hospitalet de Llobregat, Barcelona</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.17 1 2 2 0 012.19 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+                    </div>
+                    <div class="info-text">
+                        <h4>Teléfono</h4>
+                        <a href="tel:+34932989390">932 98 93 90</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div class="info-text">
+                        <h4>Horario</h4>
+                        <p>Lunes a Viernes: 10:00 – 21:30<br>Sábado y Domingo: Cerrado</p>
+                    </div>
+                </div>
+                <div style="margin-top:1.5rem">
+                    <a href="tel:+34932989390" class="btn-primary" style="width:100%;justify-content:center">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.17 1 2 2 0 012.19 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.62-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
+                        Llamar para pedir cita
+                    </a>
+                </div>
+            </div>
+            <div class="map-wrap reveal">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993!2d2.1085!3d41.3598!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4988c!2sCentre+Terapeutic+Quiros!5e0!3m2!1ses!2ses!4v1718000000001!5m2!1ses!2ses"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    title="Ubicación de Centre Terapèutic Quirós">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div>
+        <div class="foot-brand">Centre Terapèutic <span>Quirós</span></div>
+        <div style="margin-top:.4rem">Estètica · Benestar · Salut · L'Hospitalet de Llobregat</div>
+    </div>
+    <div style="text-align:right">
+        <div>Carrer de Jacint Verdaguer, 14 · 08902 L'Hospitalet</div>
+        <div style="margin-top:.3rem"><a href="tel:+34932989390">932 98 93 90</a></div>
+        <div style="margin-top:.6rem;font-size:.7rem;opacity:.4">Web by <a href="https://linzpe.github.io/web-portfolio/">Linz · Estudio Web</a></div>
+    </div>
+</footer>
+
+<script>
+    // NAV scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Hero bg
+    const heroBg = document.getElementById('heroBg');
+    heroBg.style.backgroundImage = "url('fachada1.png')";
+    const img = new Image();
+    img.onload = () => heroBg.classList.add('loaded');
+    img.src = 'fachada1.png';
+
+    // Burger
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    burger.addEventListener('click', () => {
+        burger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+        document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mm-link, .mobile-tel').forEach(a => {
+        a.addEventListener('click', () => {
+            burger.classList.remove('open');
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Reveal
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
